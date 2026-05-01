@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 513 513" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g transform="matrix(1,0,0,1,-84,-3169)">
+<svg width="100%" height="100%" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-80,-3174)">
         <g transform="matrix(1,0,0,1,70.72487,183.800857)">
-            <g id="color_glow_white_name" transform="matrix(0.917475,0,0,0.917475,13.40884,1436.32124)">
+            <g id="color_glow_white_name" transform="matrix(0.917475,0,0,0.917475,9.27513,1440.875624)">
                 <rect x="0" y="1688.681" width="558.053" height="558.053" style="fill:none;"/>
                 <clipPath id="_clip1">
                     <rect x="0" y="1688.681" width="558.053" height="558.053"/>
                 </clipPath>
                 <g clip-path="url(#_clip1)">
                     <g id="_--Colored-Glow" serif:id="- Colored Glow" transform="matrix(0.174506,0,0,0.174506,17.270006,2194.032577)">
-                        <g id="Blur" transform="matrix(6.245908,-0,-0,6.245908,-99.800326,-2898.681108)">
-                            <use xlink:href="#_Image2" x="27.441" y="0.446" width="456px" height="452px"/>
+                        <g id="Blur" transform="matrix(6.245908,-0,-0,6.245908,-98.965184,-2895.897835)">
+                            <use xlink:href="#_Image2" x="27.307" y="0" width="456px" height="452px"/>
                         </g>
                         <g id="_--Colored" serif:id="- Colored" transform="matrix(2.5,0,0,2.5,250.012831,-2750)">
                             <g>
