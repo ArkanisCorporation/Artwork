@@ -79,6 +79,43 @@ is finicky:
 <![endif]-->
 ```
 
+## Affinity design sources (`Signatures.af`)
+
+`Signatures.af` (this folder) holds all 10 designs as named artboards — 5 variants × 2
+founders, laid out in a grid (columns = founders, rows = variants). It is the **design
+source for manual editing only**; the `.htm` files above stay the delivery format.
+
+> **Do not use SVG or Affinity output for the email itself.** Classic Outlook never
+> rendered SVG, and since September 2025 Microsoft actively blocks inline SVG in Outlook
+> web and new Outlook for Windows (blank placeholder, XSS mitigation). PNG stays.
+
+Built by `build-signatures.affinity.js` through the Affinity MCP server (Affinity by
+Canva 3.2.2+, **Edit ▸ Settings ▸ Model Context Protocol**). The same script is saved in
+Affinity's script library as *"Arkanis — Build Email Signature Artboards"*.
+
+- **Re-runnable.** The script wipes the spread and rebuilds from scratch, so edit the
+  constants and re-run rather than hand-patching 10 artboards. **It destroys manual
+  edits** — including placed logo art. Place art last, or re-place after a rebuild.
+- **Logo art is deliberately not recreated.** Seal and wordmark are named placeholder
+  rects (`SEAL-PLACEHOLDER 42x42`, `WORDMARK-PLACEHOLDER 196x35`, …) at the exact
+  position and size the `.htm` uses. Place the native art from `Logos/logo.afdesign`
+  over them and apply the glow as a live layer FX (`Logos/color/color_glow.svg` imports
+  badly — 142 radial gradients, embedded raster, no viewBox).
+- Text is live `ArtText`, one node per line, so every string stays individually
+  editable. Geometry mirrors the `.htm` exactly; baselines are derived from Segoe UI
+  font metrics rather than eyeballed.
+
+Gotchas worth knowing before scripting Affinity here (all verified against 3.2.2.4557):
+
+| Thing | Reality |
+| ----- | ------- |
+| Script filesystem access | **Desktop-only.** Any `D:` path throws `PERMISSION_DENIED`, including `Document.load`. Already-open documents are exempt — that's why the script edits `Signatures.af` in place and calls `doc.save()`. `saveAs` to `D:` is denied. |
+| Coordinates | Always **pixels**, whatever the document's display units say. |
+| Font size vs tracking | `GlyphAttDoubleType.Height` is in **pixels**; `CharacterSpacing` is in **em** (pass `0.22` for CSS `.22em`, not `2.42`). |
+| `doc.dpi` setter | Silently does nothing. `doc.units` does work. |
+| `Document.close()` | `NOT_IMPLEMENTED` — close documents by hand. |
+| Cross-document copy | Unsupported; `createMoveNodes` between documents fails. Build in the target document. |
+
 ## Regenerating
 
 Source templates and the build script live in the design scratchpad (per-variant body
