@@ -12,15 +12,21 @@ email-signatures/
 ├── assets/                      ← shared images (MUST travel with the .htm files)
 │   ├── seal.png                 ← glow Blossom Star (the "wax seal")
 │   ├── wordmark.png             ← "ARKANIS CORPORATION" text-only wordmark, white
-│   └── hrule.png                ← 2px cyan→violet→magenta gradient hairline
+│   ├── hrule.png                ← 2px cyan→violet→magenta gradient hairline
+│   └── vspine.png               ← 3x74 vertical gradient spine — BUILD INPUT ONLY,
+│                                  no .htm references it at runtime (see -inline below)
 ├── Arkanis-Signature-A1-Sealed-Card-star-left-<Person>.htm
 ├── Arkanis-Signature-A2-Sealed-Card-star-right-<Person>.htm
 ├── Arkanis-Signature-B-Letterhead-<Person>.htm
 ├── Arkanis-Signature-C-Monogram-<Person>.htm
-└── Arkanis-Signature-D-Monogram-gradient-<Person>.htm
+├── Arkanis-Signature-D-Monogram-gradient-<Person>.htm
+├── Arkanis-Signature-<A1|A2|B|D>-…-<Person>-inline.htm   ← self-contained, for web paste
+├── build-inline.py              ← regenerates every -inline build
+└── build-signatures.affinity.js ← rebuilds the Affinity artboards
 ```
 
-`<Person>` = `Delta` (Merlin) or `KronnY` (Daniel). 5 variants × 2 people = 10 files.
+`<Person>` = `Delta` (Merlin) or `KronnY` (Daniel). 5 variants × 2 people = 10 files,
+plus 8 `-inline` builds (see below).
 
 ## The variants
 
@@ -52,10 +58,29 @@ violet** on white.
 
 ## Install — new Outlook / Outlook on the web, Apple Mail, Gmail
 
-These render the same HTML but don't use the Signatures folder. Easiest path: open the
-`.htm` in a browser, select-all, copy, and paste into the client's signature editor.
-(Gmail and Apple Mail keep the images; for new Outlook web you may need the images
-hosted at a public URL instead of local files — ask and I'll produce a hosted-URL build.)
+These render the same HTML but don't use the Signatures folder. **Use the `-inline`
+build**: open it in a browser, select-all, copy, paste into the client's signature
+editor. Those files have every image stamped in as a `data:` URI, so nothing depends on
+`assets/` resolving — which it won't when you paste markup into a web editor.
+
+### The `-inline` builds
+
+Regenerate with `python build-inline.py` (`--check` verifies they're reproducible and
+writes nothing). Not every variant has one, by design:
+
+| Variant | Inline build | Why |
+| ------- | ------------ | --- |
+| **A1**, **A2** | yes | 3 images each (seal, wordmark, hrule) |
+| **B** | yes | 2 images, **plus** the gradient spine swapped to a 3×74 PNG |
+| **D** | yes | no images, but the gradient spine is swapped to a 3×87 PNG |
+| **C** | **none** | no images and no gradient — the plain `.htm` is already fully self-contained. An inline build would be a byte-identical copy, so paste the plain file. |
+
+B and D paint their spine with a CSS `linear-gradient`. Paste sanitizers routinely drop
+`background-image`, which would silently flatten the brand gradient to solid violet, so
+the inline builds swap it for a real PNG at the measured cell height (B 74px, D 87px).
+
+> The `-inline` files are ~156 KB (A1/A2/B) because the base64 seal alone is ~130 KB.
+> That's fine for a paste buffer. D's is ~2.6 KB — only the tiny spine is embedded.
 
 ## Optional: rounded corners in classic Outlook (VML)
 
